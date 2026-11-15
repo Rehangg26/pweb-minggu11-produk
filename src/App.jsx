@@ -12,6 +12,12 @@ const initialProducts = [
 
 function App() {
   const [products] = useState(initialProducts)
+  const [search, setSearch] = useState('')
+
+  const keyword = search.trim().toLowerCase()
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(keyword)
+  )
 
   return (
     <main className="container">
@@ -19,7 +25,27 @@ function App() {
         <h1>Manajemen Produk</h1>
         <p>Kelola daftar produk dan harga dalam satu tempat.</p>
       </header>
-      <ProductList products={products} />
+
+      <div className="toolbar">
+        <input
+          className="search-input"
+          type="text"
+          placeholder="Cari nama produk..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <span className="product-count">{products.length} produk</span>
+      </div>
+
+      {filteredProducts.length > 0 ? (
+        <ProductList products={filteredProducts} />
+      ) : (
+        <p className="empty-message">Produk tidak ditemukan.</p>
+      )}
+
+      <p className="showing-info">
+        Menampilkan {filteredProducts.length} dari {products.length} produk
+      </p>
     </main>
   )
 }
