@@ -15,6 +15,7 @@ function App() {
   const [products, setProducts] = useState(initialProducts)
   const [search, setSearch] = useState('')
   const [isAddOpen, setIsAddOpen] = useState(false)
+  const [editingProduct, setEditingProduct] = useState(null)
 
   const keyword = search.trim().toLowerCase()
   const filteredProducts = products.filter((product) =>
@@ -25,6 +26,15 @@ function App() {
     const nextId = Math.max(0, ...products.map((p) => p.id)) + 1
     setProducts([...products, { id: nextId, name, price }])
     setIsAddOpen(false)
+  }
+
+  function handleEditProduct({ name, price }) {
+    setProducts(
+      products.map((p) =>
+        p.id === editingProduct.id ? { ...p, name, price } : p
+      )
+    )
+    setEditingProduct(null)
   }
 
   return (
@@ -51,7 +61,7 @@ function App() {
       </div>
 
       {filteredProducts.length > 0 ? (
-        <ProductList products={filteredProducts} />
+        <ProductList products={filteredProducts} onEdit={setEditingProduct} />
       ) : (
         <p className="empty-message">Produk tidak ditemukan.</p>
       )}
@@ -66,6 +76,17 @@ function App() {
           submitLabel="Simpan Produk"
           onSubmit={handleAddProduct}
           onClose={() => setIsAddOpen(false)}
+        />
+      )}
+
+      {editingProduct && (
+        <ProductFormModal
+          key={editingProduct.id}
+          title="Edit Produk"
+          submitLabel="Simpan Perubahan"
+          initialValues={editingProduct}
+          onSubmit={handleEditProduct}
+          onClose={() => setEditingProduct(null)}
         />
       )}
     </main>

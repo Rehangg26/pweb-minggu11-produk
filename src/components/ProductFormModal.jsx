@@ -28,6 +28,7 @@ function ProductFormModal({ title, submitLabel, initialValues, onSubmit, onClose
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h2>{title}</h2>
+        {initialValues?.id && <p className="form-id">ID: {initialValues.id}</p>}
         <form onSubmit={handleSubmit} noValidate>
           <label className="form-field">
             Nama Produk

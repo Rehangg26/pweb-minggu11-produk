@@ -1,13 +1,13 @@
 import ProductCard from './ProductCard'
 
-function ProductList({ products }) {
-    return (
+function ProductList({ products, onEdit }) {
+  return (
     <div className="product-grid">
-        {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-        ))}
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} onEdit={onEdit} />
+      ))}
     </div>
-    )
+  )
 }
 
 export default ProductList
