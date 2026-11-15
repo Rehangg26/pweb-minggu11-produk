@@ -1,8 +1,6 @@
-function formatRupiah(price) {
-  return 'Rp' + price.toLocaleString('id-ID')
-}
+import { formatRupiah } from '../utils/formatRupiah'
 
-function ProductCard({ product, onEdit }) {
+function ProductCard({ product, onEdit, onDelete }) {
   return (
     <div className="product-card">
       <span className="product-id">ID: {product.id}</span>
@@ -12,7 +10,9 @@ function ProductCard({ product, onEdit }) {
         <button className="btn-edit" onClick={() => onEdit(product)}>
           Edit
         </button>
-        <button className="btn-delete">Hapus</button>
+        <button className="btn-delete" onClick={() => onDelete(product)}>
+          Hapus
+        </button>
       </div>
     </div>
   )
