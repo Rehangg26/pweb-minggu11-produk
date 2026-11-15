@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import ProductList from './components/ProductList'
 import ProductFormModal from './components/ProductFormModal'
+import DeleteConfirmModal from './components/DeleteConfirmModal'
 import './App.css'
 
 const initialProducts = [
@@ -16,6 +17,7 @@ function App() {
   const [search, setSearch] = useState('')
   const [isAddOpen, setIsAddOpen] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
+  const [deletingProduct, setDeletingProduct] = useState(null)
 
   const keyword = search.trim().toLowerCase()
   const filteredProducts = products.filter((product) =>
@@ -35,6 +37,11 @@ function App() {
       )
     )
     setEditingProduct(null)
+  }
+
+  function handleDeleteProduct() {
+    setProducts(products.filter((p) => p.id !== deletingProduct.id))
+    setDeletingProduct(null)
   }
 
   return (
@@ -61,7 +68,11 @@ function App() {
       </div>
 
       {filteredProducts.length > 0 ? (
-        <ProductList products={filteredProducts} onEdit={setEditingProduct} />
+        <ProductList
+          products={filteredProducts}
+          onEdit={setEditingProduct}
+          onDelete={setDeletingProduct}
+        />
       ) : (
         <p className="empty-message">Produk tidak ditemukan.</p>
       )}
@@ -87,6 +98,14 @@ function App() {
           initialValues={editingProduct}
           onSubmit={handleEditProduct}
           onClose={() => setEditingProduct(null)}
+        />
+      )}
+
+      {deletingProduct && (
+        <DeleteConfirmModal
+          product={deletingProduct}
+          onConfirm={handleDeleteProduct}
+          onClose={() => setDeletingProduct(null)}
         />
       )}
     </main>
