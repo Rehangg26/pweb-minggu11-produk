@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import ProductList from './components/ProductList'
+import ProductFormModal from './components/ProductFormModal'
 import './App.css'
 
 const initialProducts = [
@@ -11,19 +12,31 @@ const initialProducts = [
 ]
 
 function App() {
-  const [products] = useState(initialProducts)
+  const [products, setProducts] = useState(initialProducts)
   const [search, setSearch] = useState('')
+  const [isAddOpen, setIsAddOpen] = useState(false)
 
   const keyword = search.trim().toLowerCase()
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(keyword)
   )
 
+  function handleAddProduct({ name, price }) {
+    const nextId = Math.max(0, ...products.map((p) => p.id)) + 1
+    setProducts([...products, { id: nextId, name, price }])
+    setIsAddOpen(false)
+  }
+
   return (
     <main className="container">
-      <header className="header">
-        <h1>Manajemen Produk</h1>
-        <p>Kelola daftar produk dan harga dalam satu tempat.</p>
+      <header className="header header-row">
+        <div>
+          <h1>Manajemen Produk</h1>
+          <p>Kelola daftar produk dan harga dalam satu tempat.</p>
+        </div>
+        <button className="btn-primary" onClick={() => setIsAddOpen(true)}>
+          + Tambah Produk
+        </button>
       </header>
 
       <div className="toolbar">
@@ -46,6 +59,15 @@ function App() {
       <p className="showing-info">
         Menampilkan {filteredProducts.length} dari {products.length} produk
       </p>
+
+      {isAddOpen && (
+        <ProductFormModal
+          title="Tambah Produk"
+          submitLabel="Simpan Produk"
+          onSubmit={handleAddProduct}
+          onClose={() => setIsAddOpen(false)}
+        />
+      )}
     </main>
   )
 }
