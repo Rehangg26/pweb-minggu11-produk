@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { Route, Routes } from 'react-router'
+import AppLayout from './components/AppLayout'
 import ProductList from './components/ProductList'
 import ProductFormModal from './components/ProductFormModal'
 import DeleteConfirmModal from './components/DeleteConfirmModal'
@@ -12,7 +14,8 @@ const initialProducts = [
   { id: 5, name: 'Penghapus', price: 3000 },
 ]
 
-function App() {
+// Sementara: halaman produk masih di sini, dipindah ke ProductsPage di commit berikutnya
+function ProductsScreen() {
   const [products, setProducts] = useState(initialProducts)
   const [search, setSearch] = useState('')
   const [isAddOpen, setIsAddOpen] = useState(false)
@@ -45,7 +48,7 @@ function App() {
   }
 
   return (
-    <main className="container">
+    <div className="container">
       <header className="header header-row">
         <div>
           <h1>Manajemen Produk</h1>
@@ -108,7 +111,17 @@ function App() {
           onClose={() => setDeletingProduct(null)}
         />
       )}
-    </main>
+    </div>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<AppLayout />}>
+        <Route index element={<ProductsScreen />} />
+      </Route>
+    </Routes>
   )
 }
 
