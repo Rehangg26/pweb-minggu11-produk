@@ -5,6 +5,7 @@ import DashboardPage from './pages/DashboardPage'
 import NotFoundPage from './pages/NotFoundPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import ProductsPage from './pages/ProductsPage'
+import SettingsPage from './pages/SettingsPage'
 
 const initialProducts = [
   { id: 1, name: 'Pulpen', price: 5000 },
@@ -16,6 +17,7 @@ const initialProducts = [
 
 function App() {
   const [products, setProducts] = useState(initialProducts)
+  const [viewMode, setViewMode] = useState('grid') // 'grid' atau 'list'
 
   function handleAddProduct({ name, price }) {
     const nextId = Math.max(0, ...products.map((p) => p.id)) + 1
@@ -39,11 +41,16 @@ function App() {
           element={
             <ProductsPage
               products={products}
+              viewMode={viewMode}
               onAddProduct={handleAddProduct}
               onEditProduct={handleEditProduct}
               onDeleteProduct={handleDeleteProduct}
             />
           }
+        />
+        <Route
+          path="settings"
+          element={<SettingsPage viewMode={viewMode} onChangeViewMode={setViewMode} />}
         />
         <Route path="products/:id" element={<ProductDetailPage products={products} />} />
         <Route path="*" element={<NotFoundPage />} />

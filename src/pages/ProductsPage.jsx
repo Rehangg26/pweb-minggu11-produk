@@ -4,7 +4,7 @@ import ProductFormModal from '../components/ProductFormModal'
 import DeleteConfirmModal from '../components/DeleteConfirmModal'
 
 // products dan fungsi CRUD datang dari App lewat props
-function ProductsPage({ products, onAddProduct, onEditProduct, onDeleteProduct }) {
+function ProductsPage({ products, viewMode, onAddProduct, onEditProduct, onDeleteProduct }) {
   const [search, setSearch] = useState('')
   const [isAddOpen, setIsAddOpen] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
@@ -59,6 +59,7 @@ function ProductsPage({ products, onAddProduct, onEditProduct, onDeleteProduct }
       {filteredProducts.length > 0 ? (
         <ProductList
           products={filteredProducts}
+          viewMode={viewMode}
           onEdit={setEditingProduct}
           onDelete={setDeletingProduct}
         />
