@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import { formatRupiah } from '../utils/formatRupiah'
 
 function ProductCard({ product, onEdit, onDelete }) {
@@ -7,6 +8,12 @@ function ProductCard({ product, onEdit, onDelete }) {
       <h3 className="mt-1 text-lg font-semibold">{product.name}</h3>
       <p className="font-medium text-blue-700">{formatRupiah(product.price)}</p>
       <div className="mt-3 flex gap-2">
+        <Link
+          to={`/products/${product.id}`}
+          className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+        >
+          Detail
+        </Link>
         <button
           className="rounded-lg border border-blue-700 px-3 py-1.5 text-sm text-blue-700 hover:bg-blue-50"
           onClick={() => onEdit(product)}
