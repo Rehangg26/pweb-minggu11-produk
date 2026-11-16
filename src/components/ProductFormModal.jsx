@@ -25,38 +25,40 @@ function ProductFormModal({ title, submitLabel, initialValues, onSubmit, onClose
   }
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <h2>{title}</h2>
-        {initialValues?.id && <p className="form-id">ID: {initialValues.id}</p>}
+    <div className="fixed inset-0 flex items-center justify-center bg-black/45 p-4" onClick={onClose}>
+      <div className="w-full max-w-md rounded-xl bg-white p-6" onClick={(e) => e.stopPropagation()}>
+        <h2 className="mb-3 text-xl font-bold">{title}</h2>
+        {initialValues?.id && <p className="mb-3 text-xs text-gray-500">ID: {initialValues.id}</p>}
         <form onSubmit={handleSubmit} noValidate>
-          <label className="form-field">
+          <label className="mb-3 flex flex-col gap-1.5 text-sm font-semibold">
             Nama Produk
             <input
+              className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-normal"
               type="text"
               placeholder="Contoh: Pulpen"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            {errors.name && <span className="form-error">{errors.name}</span>}
+            {errors.name && <span className="text-xs font-normal text-red-600">{errors.name}</span>}
           </label>
 
-          <label className="form-field">
+          <label className="mb-3 flex flex-col gap-1.5 text-sm font-semibold">
             Harga (Rp)
             <input
+              className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-normal"
               type="number"
               placeholder="Contoh: 5000"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
-            {errors.price && <span className="form-error">{errors.price}</span>}
+            {errors.price && <span className="text-xs font-normal text-red-600">{errors.price}</span>}
           </label>
 
-          <div className="modal-actions">
-            <button type="button" className="btn-cancel" onClick={onClose}>
+          <div className="mt-2 flex justify-end gap-2">
+            <button type="button" className="rounded-lg border border-blue-700 px-4 py-2 text-sm text-blue-700 hover:bg-blue-50" onClick={onClose}>
               Batal
             </button>
-            <button type="submit" className="btn-primary">
+            <button type="submit" className="rounded-lg bg-blue-700 px-4 py-2 text-sm text-white hover:bg-blue-800">
               {submitLabel}
             </button>
           </div>

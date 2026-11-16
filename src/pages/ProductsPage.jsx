@@ -2,7 +2,6 @@ import { useState } from 'react'
 import ProductList from '../components/ProductList'
 import ProductFormModal from '../components/ProductFormModal'
 import DeleteConfirmModal from '../components/DeleteConfirmModal'
-import '../App.css'
 
 // products dan fungsi CRUD datang dari App lewat props
 function ProductsPage({ products, onAddProduct, onEditProduct, onDeleteProduct }) {
@@ -32,26 +31,29 @@ function ProductsPage({ products, onAddProduct, onEditProduct, onDeleteProduct }
   }
 
   return (
-    <div className="container">
-      <header className="header header-row">
+    <div>
+      <header className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1>Manajemen Produk</h1>
-          <p>Kelola daftar produk dan harga dalam satu tempat.</p>
+          <h1 className="text-2xl font-bold">Manajemen Produk</h1>
+          <p className="text-gray-500">Kelola daftar produk dan harga dalam satu tempat.</p>
         </div>
-        <button className="btn-primary" onClick={() => setIsAddOpen(true)}>
+        <button
+          className="rounded-lg bg-blue-700 px-4 py-2 text-sm text-white hover:bg-blue-800"
+          onClick={() => setIsAddOpen(true)}
+        >
           + Tambah Produk
         </button>
       </header>
 
-      <div className="toolbar">
+      <div className="mb-4 flex items-center gap-3">
         <input
-          className="search-input"
+          className="w-full flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm"
           type="text"
           placeholder="Cari nama produk..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <span className="product-count">{products.length} produk</span>
+        <span className="whitespace-nowrap text-sm text-gray-500">{products.length} produk</span>
       </div>
 
       {filteredProducts.length > 0 ? (
@@ -61,10 +63,10 @@ function ProductsPage({ products, onAddProduct, onEditProduct, onDeleteProduct }
           onDelete={setDeletingProduct}
         />
       ) : (
-        <p className="empty-message">Produk tidak ditemukan.</p>
+        <p className="py-8 text-center text-gray-500">Produk tidak ditemukan.</p>
       )}
 
-      <p className="showing-info">
+      <p className="mt-4 text-sm text-gray-500">
         Menampilkan {filteredProducts.length} dari {products.length} produk
       </p>
 
