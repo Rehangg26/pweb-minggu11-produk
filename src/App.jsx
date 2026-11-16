@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Route, Routes } from 'react-router'
 import AppLayout from './components/AppLayout'
 import DashboardPage from './pages/DashboardPage'
+import NotFoundPage from './pages/NotFoundPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import ProductsPage from './pages/ProductsPage'
 
@@ -45,6 +46,7 @@ function App() {
           }
         />
         <Route path="products/:id" element={<ProductDetailPage products={products} />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   )
